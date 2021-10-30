@@ -20,7 +20,7 @@ public class HibController {
 
     @GetMapping("/by-city")
     public List<Persons> getPersonsByCity(@RequestParam String city) {
-        return repository.getPersonsByCityOfLiving(city);
+        return repository.getByCityOfLiving(city);
     }
 
     @GetMapping("/age")
