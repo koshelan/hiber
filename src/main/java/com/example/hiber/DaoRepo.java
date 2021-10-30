@@ -1,32 +1,21 @@
 package com.example.hiber;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class DaoRepo {
+public interface DaoRepo extends JpaRepository<Persons, Persons.PersonsPK> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    List<Persons> getPersonsByCityOfLiving(String city);
+
+    List<Persons> findByPersonsPKAgeLessThanOrderByPersonsPKAge(int age);
+
+    Optional<Persons> getPersonsByPersonsPKNameAndAndPersonsPKSurname(String name, String surname);
 
 
-    public List<Persons> getPersonsByCity(String city) {
-        Query query = entityManager
-                .createQuery("select p from Persons p where lower(p.cityOfLiving) = lower(:city)", Persons.class);
-        query.setParameter("city", city);
-        return query.getResultList();
-    }
-
-    @Transactional
-    public void prepare(Persons p) {
-        System.out.println(p);
-        entityManager.persist(p);
-    }
 
 }
