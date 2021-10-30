@@ -18,6 +18,11 @@ public class HibController {
         this.repository = repository;
     }
 
+    @GetMapping("/h")
+    public String getHello(){
+        return "Hello";
+    }
+
     @GetMapping("/by-city")
     public List<Persons> getPersonsByCity(@RequestParam String city) {
         return repository.getByCityOfLiving(city);
